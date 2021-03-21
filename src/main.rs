@@ -6,8 +6,10 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     // TODO: read from standard input with no FILE input or "-"
-    if args.len() <= 1 {
-        panic!("please specify a file");
+    if args.len() == 1 {
+        println!("running in echo mode!");
+        read::echo_mode().expect("echo mode error");
+        return;
     }
 
     let filename = &args[1];
