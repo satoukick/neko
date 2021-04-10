@@ -11,7 +11,13 @@ pub fn echo_mode() -> Result<std::string::String, std::io::Error> {
     for line in stdin.lock().lines() {
         match line {
             Err(e) => return Err(e),
-            Ok(l) => println!("{}", l),
+            Ok(l) => {
+                if l == "EOF" {
+                    return Ok(String::from("finished"));
+                } else {
+                    println!("{}", l);
+                }
+            }
         }
     }
     Ok(String::from("finished"))
