@@ -6,6 +6,7 @@ pub fn read_file_lines(filename: String) {
     println!("{}", result);
 }
 
+// reads from standard input and copy to standard output
 pub fn echo_mode() -> Result<std::string::String, std::io::Error> {
     let stdin = io::stdin();
     for line in stdin.lock().lines() {
