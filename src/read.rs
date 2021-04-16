@@ -2,7 +2,7 @@ use std::fs;
 use std::io::{self, BufRead};
 
 pub fn read_file_lines(filename: String) {
-    let result = fs::read_to_string(filename).expect("error reading file");
+    let result = fs::read_to_string(filename).expect("reading file");
     println!("{}", result);
 }
 
@@ -26,3 +26,12 @@ pub fn echo_mode() -> Result<std::string::String, std::io::Error> {
 
 // TODO: handle from env input, replace codes in main function
 pub fn handle_args() {}
+
+mod test {
+    use crate::read::read_file_lines;
+
+    #[test]
+    fn test_read_example_file() {
+        read_file_lines(String::from("example.txt"))
+    }
+}
