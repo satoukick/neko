@@ -1,7 +1,7 @@
 use std::fs;
 use std::io::{self, BufRead};
 
-pub fn read_file_lines(filename: String) {
+pub fn read_file_lines(filename: &String) {
     let result = fs::read_to_string(filename).expect("reading file");
     println!("{}", result);
 }
@@ -13,25 +13,41 @@ pub fn echo_mode() -> Result<std::string::String, std::io::Error> {
         match line {
             Err(e) => return Err(e),
             Ok(l) => {
-                if l == "EOF" {
-                    return Ok(String::from("finished"));
-                } else {
-                    println!("{}", l);
-                }
+                println!("{}", l);
             }
         }
     }
     Ok(String::from("finished"))
 }
 
-// TODO: handle from env input, replace codes in main function
-pub fn handle_args() {}
+pub fn handle_args(args: &[String]) -> Result<std::string::String, std::io::Error> {
+    for arg in args {
+        // echo mode
+        if arg == "-" {
+            echo_mode().expect("running echo mode");
+            continue;
+        }
 
+        let filename = arg;
+        read_file_lines(filename);
+    }
+
+    Ok(String::from("handle arguments successful"))
+}
+
+#[cfg(test)]
 mod test {
-    use crate::read::read_file_lines;
+    use super::*;
 
     #[test]
     fn test_read_example_file() {
-        read_file_lines(String::from("example.txt"))
+        read_file_lines(&String::from("example.txt"))
+    }
+
+    #[test]
+    fn test_handle_args() {
+        let args = &[String::from("example.txt")];
+        let result = handle_args(args);
+        assert!(result.is_ok())
     }
 }

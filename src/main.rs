@@ -1,24 +1,21 @@
 mod read;
 
 use std::env;
+use std::process;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
+    let files = &args[1..];
 
-    // TODO: write test files!
-    if args.len() == 1 {
-        println!("running in echo mode!");
-        read::echo_mode().expect("echo mode error");
-        return;
+    let result = read::handle_args(files);
+
+    match result {
+        Err(err) => {
+            println!("neko did not succeed: {}", err);
+            process::exit(1);
+        }
+        Ok(_) => {
+            println!("neko finished.");
+        }
     }
-
-    let filename = &args[1];
-
-    if filename == "-" {
-        println!("running in echo mode!");
-        read::echo_mode().expect("echo mode error");
-        return;
-    }
-
-    read::read_file_lines(filename.to_string());
 }
