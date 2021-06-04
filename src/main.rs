@@ -1,3 +1,4 @@
+mod options;
 mod read;
 
 use std::env;

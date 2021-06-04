@@ -1,6 +1,8 @@
 use std::fs;
 use std::io::{self, BufRead};
 
+use crate::options::Options;
+
 pub fn read_file_lines(filename: &String) {
     let result = fs::read_to_string(filename).expect("reading file");
     println!("{}", result);
@@ -27,6 +29,8 @@ pub fn handle_args(args: &[String]) -> Result<std::string::String, std::io::Erro
             echo_mode().expect("running echo mode");
             continue;
         }
+
+        // if arg[-]
 
         let filename = arg;
         read_file_lines(filename);
