@@ -22,6 +22,13 @@ pub fn echo_mode() -> Result<std::string::String, std::io::Error> {
     Ok(String::from("finished"))
 }
 
+// TODO: premature idea: convert arguments to vector of enum Options,
+// in order to know all requested options and files before starting to output
+pub fn decide_modes(args: &[String]) -> Result<Vec<Options>, std::io::Error> {
+    let modes: Vec<Options> = Vec::new();
+    Ok(modes)
+}
+
 pub fn handle_args(args: &[String]) -> Result<std::string::String, std::io::Error> {
     for arg in args {
         // echo mode
