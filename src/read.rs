@@ -1,7 +1,8 @@
 use std::fs;
 use std::io::{self, BufRead};
 
-use crate::options::Options;
+use crate::options::NekoOptions;
+use crate::utils;
 
 pub fn read_file_lines(filename: &String) {
     let result = fs::read_to_string(filename).expect("reading file");
@@ -24,8 +25,21 @@ pub fn echo_mode() -> Result<std::string::String, std::io::Error> {
 
 // TODO: premature idea: convert arguments to vector of enum Options,
 // in order to know all requested options and files before starting to output
-pub fn decide_modes(args: &[String]) -> Result<Vec<Options>, std::io::Error> {
-    let modes: Vec<Options> = Vec::new();
+pub fn decide_modes(args: &[String]) -> Result<Vec<NekoOptions>, std::io::Error> {
+    let mut modes: Vec<NekoOptions> = Vec::new();
+
+    for arg in args {
+        let processed_arg = utils::remove_whitespaces(arg.as_str());
+        let mode = match processed_arg.as_str() {
+            "-n" => NekoOptions::ShowEnds,
+            "--version" => NekoOptions::Version,
+            "-" => NekoOptions::StdInput,
+
+            _ => NekoOptions::StdInput,
+        };
+        modes.push(mode);
+    }
+
     Ok(modes)
 }
 

@@ -1,5 +1,6 @@
 mod options;
 mod read;
+mod utils;
 
 use std::env;
 use std::process;
