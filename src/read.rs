@@ -43,6 +43,19 @@ pub fn decide_modes(args: &[String]) -> Result<Vec<NekoOptions>, std::io::Error>
     Ok(modes)
 }
 
+// get the decide_modes result。 Use the first argument and ignore the rest.
+// TODO: remove this function, this is only for experiment!
+pub fn decide_modes_experiment(args: &[String]) {
+    let modes = decide_modes(args);
+    match modes {
+        Err(e) => panic!("internal error happened: {}", e),
+        Ok(m) => match m[0] {
+            NekoOptions::Version => output_version(),
+            _ => println!("Unavailable for now!"),
+        },
+    }
+}
+
 pub fn handle_args(args: &[String]) -> Result<std::string::String, std::io::Error> {
     for arg in args {
         // echo mode
@@ -89,5 +102,12 @@ mod test {
     #[test]
     fn test_output_version() {
         output_version();
+    }
+
+    #[test]
+    fn test_decide_modes_experiment() {
+        let arg: [String; 1] = ["--version".to_string()];
+
+        decide_modes_experiment(&arg);
     }
 }
