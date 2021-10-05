@@ -60,6 +60,16 @@ pub fn handle_args(args: &[String]) -> Result<std::string::String, std::io::Erro
     Ok(String::from("handle arguments successful"))
 }
 
+fn output_version() {
+    println!("neko {}", env!("VERGEN_BUILD_SEMVER"));
+    println!();
+    println!("Build Timestamp: {}", env!("VERGEN_BUILD_TIMESTAMP"));
+    println!("Build Version:   {}", env!("VERGEN_BUILD_SEMVER"));
+    println!("Commit SHA:      {}", env!("VERGEN_GIT_SHA"));
+    println!("Commit Time:     {}", env!("VERGEN_GIT_COMMIT_TIMESTAMP"));
+    println!("rustc Version:   {}", env!("VERGEN_RUSTC_SEMVER"));
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -74,5 +84,10 @@ mod test {
         let args = &[String::from("example.txt")];
         let result = handle_args(args);
         assert!(result.is_ok())
+    }
+
+    #[test]
+    fn test_output_version() {
+        output_version();
     }
 }
