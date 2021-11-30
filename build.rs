@@ -1,5 +1,9 @@
 use vergen::{vergen, Config};
 
 fn main() {
-    vergen(Config::default());
+    let r = vergen(Config::default());
+    match r {
+        Err(e) => panic!("vergen: {}", e),
+        _ => {}
+    }
 }
